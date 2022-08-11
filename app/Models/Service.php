@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     use HasFactory;
+    protected $fillable=['libelle'];
+
+    public function serviceGarages(){
+        return $this->hasMany(Service_Garage::class);
+    }
 }

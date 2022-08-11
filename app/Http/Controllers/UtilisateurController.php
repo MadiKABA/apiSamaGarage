@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 
 class UtilisateurController extends Controller
@@ -13,7 +14,8 @@ class UtilisateurController extends Controller
      */
     public function index()
     {
-        //
+        $profiles=Utilisateur::all();
+        return response()->json($profiles);
     }
 
     /**
@@ -34,27 +36,29 @@ class UtilisateurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $profile=Utilisateur::create($request->all());
+        return response()->json($profile);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Utilisateur  $utilisateur
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Utilisateur $utilisateur)
     {
-        //
+        $utilisateur=Utilisateur::find($utilisateur);
+        return $utilisateur;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Utilisateur  $utilisateur
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Utilisateur $utilisateur)
     {
         //
     }
@@ -63,22 +67,31 @@ class UtilisateurController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Utilisateur  $utilisateur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Utilisateur $utilisateur)
     {
-        //
+        $input=$request->all();
+        $utilisateur->nom=$input['nom'];
+        $utilisateur->prenom=$input['prenom'];
+        $utilisateur->email=$input['email'];
+        $utilisateur->password=$input['password'];
+        $utilisateur->adresse=$input['adresse'];
+        $utilisateur->profil_id=$input['profil_id'];
+        $utilisateur->save();
+        return response()->json($utilisateur);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Utilisateur  $utilisateur
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Utilisateur $utilisateur)
     {
-        //
+        $utilisateur->delete();
+        return response()->json($utilisateur);
     }
 }
