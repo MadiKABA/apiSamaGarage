@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ServiceGarage;
 use Illuminate\Http\Request;
 
 class ServiceGarageController extends Controller
@@ -34,16 +35,23 @@ class ServiceGarageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        foreach ($request->all() as $key){
+            $serviceGarage=new ServiceGarage();
+            $serviceGarage->garage_id=$key['garage_id'];
+            $serviceGarage->service_id=$key['service_id'];
+            //dd($serviceGarage->service_id);
+            $serviceGarage->save();
+        }
+        return response()->json($serviceGarage);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Service_Garage  $service_Garage
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Service_Garage $service_Garage)
     {
         //
     }
@@ -51,10 +59,10 @@ class ServiceGarageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Service_Garage  $service_Garage
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Service_Garage $service_Garage)
     {
         //
     }
@@ -63,21 +71,27 @@ class ServiceGarageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Service_Garage  $serviceGarage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Service_Garage $serviceGarage)
     {
-        //
+        foreach ($request->all() as $key){
+            $serviceGarage->garage_id=$key['garage_id'];
+            $serviceGarage->service_id=$key['service_id'];
+            //dd($serviceGarage->service_id);
+            $serviceGarage->save();
+        }
+        return response()->json($serviceGarage);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Service_Garage  $service_Garage
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Service_Garage $service_Garage)
     {
         //
     }

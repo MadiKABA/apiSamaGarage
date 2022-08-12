@@ -51,6 +51,8 @@ class GarageController extends Controller
         $garage->adresse=$request["adresse"];
         $garage->image=$compPic;
         $garage->zone_id=$request["zone_id"];
+        $garage->Utilisateur_id=$request["Utilisateur_id"];
+
         $garage->save();
         return response()->json($garage);
 

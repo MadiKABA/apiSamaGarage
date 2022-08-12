@@ -10,7 +10,7 @@ class Garage extends Model
     use HasFactory;
 
     protected $fillable=['nom','description','longitude','latitude','heureOurverture',
-        'heureFermeture','adresse','image','zone_id'];
+        'heureFermeture','adresse','image','zone_id','Utilisateur_id'];
 
     public function zone(){
         return $this->belongsTo(Zone::class);
