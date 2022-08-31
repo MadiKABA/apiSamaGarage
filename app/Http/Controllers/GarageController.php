@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Garage;
+use App\Models\Service;
 use Illuminate\Http\Request;
 class GarageController extends Controller
 {
@@ -37,11 +38,14 @@ class GarageController extends Controller
     {
         //dd($request["description"]);
         $garage=new Garage();
-        $completeFileNmae=$request->file('image')->getClientOriginalName();
-        $fileNmaeOnLy=pathinfo($completeFileNmae,PATHINFO_FILENAME);
-        $extension=$request->file('image')->getClientOriginalExtension();
-        $compPic=str_replace(' ','_',$fileNmaeOnLy).'-'.rand().'_'.time().'.'.$extension;
-        $path=$request->file('image')->storeAs('public/garage',$compPic);
+        if($request->file('image')){
+            $completeFileNmae = $request->file('image')->getClientOriginalName();
+            $fileNmaeOnLy=pathinfo($completeFileNmae,PATHINFO_FILENAME);
+            $extension=$request->file('image')->getClientOriginalExtension();
+            $fileName=str_replace(' ','_',$fileNmaeOnLy).'-'.rand().'_'.time().'.'.$extension;
+            $path = $request->file('image')->storeAs('garage/', $fileName, 'public');
+            $garage->image = '/storage/'.$path;
+        }
         $garage->nom=$request["nom"];
         $garage->description=$request["description"];
         $garage->longitude=$request["longitude"];
@@ -49,11 +53,13 @@ class GarageController extends Controller
         $garage->heureOurverture=$request["heureOurverture"];
         $garage->heureFermeture=$request["heureFermeture"];
         $garage->adresse=$request["adresse"];
-        $garage->image=$compPic;
+        $garage->telephone=$request["telephone"];
         $garage->zone_id=$request["zone_id"];
         $garage->Utilisateur_id=$request["Utilisateur_id"];
-
+        $servTab=explode(",",$request["service"]);
         $garage->save();
+        $service=Service::find($servTab);
+        $garage->services()->attach($service);
         return response()->json($garage);
 
 
@@ -62,17 +68,13 @@ class GarageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Garage  $garage
+     * @param  int $id;
      * @return \Illuminate\Http\Response
      */
-    public function show(Garage $garage)
+    public function show($id)
     {
-        $garage=Garage::find($garage);
-        return response()->json([
-            "success"=>true,
-            "message"=>"update successfully",
-            "data"=>$garage
-        ]);
+        $garage=Garage::with(['notes','services'])->get()->find($id);
+        return response()->json($garage);
     }
 
     /**
@@ -95,24 +97,28 @@ class GarageController extends Controller
      */
     public function update(Request $request, Garage $garage)
     {
-        $input=$request->all();
-        $garage->nom=$input["nom"];
-        $garage->description=$input["description"];
-        $garage->longitude=$input["longitude"];
-        $garage->latitude=$input["latitude"];
-        $garage->heureOurverture=$input["heureOurverture"];
-        $garage->heureFermeture=$input["heureFermeture"];
-        $garage->disponibilite=$input["disponibilite"];
-        $garage->adresse=$input["adresse"];
-        $garage->image=$input["image"];
-        $garage->zone_id=$input["zone_id"];
+        $garage=new Garage();
+        if($request->file('image')){
+            $completeFileNmae = $request->file('image')->getClientOriginalName();
+            $fileNmaeOnLy=pathinfo($completeFileNmae,PATHINFO_FILENAME);
+            $extension=$request->file('image')->getClientOriginalExtension();
+            $fileName=str_replace(' ','_',$fileNmaeOnLy).'-'.rand().'_'.time().'.'.$extension;
+            $path = $request->file('image')->storeAs('garage/', $fileName, 'public');
+            $garage->image = '/storage/'.$path;
+        }
+        $garage->nom=$request["nom"];
+        $garage->description=$request["description"];
+        $garage->longitude=$request["longitude"];
+        $garage->latitude=$request["latitude"];
+        $garage->heureOurverture=$request["heureOurverture"];
+        $garage->heureFermeture=$request["heureFermeture"];
+        $garage->adresse=$request["adresse"];
+        $garage->telephone=$request["telephone"];
+        $garage->zone_id=$request["zone_id"];
+        $garage->Utilisateur_id=$request["Utilisateur_id"];
 
         $garage->save();
-        return response()->json([
-            "success"=>true,
-            "message"=>"update successfully",
-            "data"=>$garage
-        ]);
+        return response()->json($garage);
     }
 
     /**

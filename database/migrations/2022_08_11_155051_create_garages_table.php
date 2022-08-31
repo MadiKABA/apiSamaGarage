@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean("disponibilite")->default(true);
             $table->string("adresse");
             $table->String("image");
+            $table->String("telephone");
             $table->unsignedBigInteger("zone_id");
             $table->unsignedBigInteger("Utilisateur_id");
             $table->foreign("zone_id")->references('id')->on("zones");

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Annonce;
 use Illuminate\Http\Request;
 
 class AnnonceController extends Controller
@@ -13,7 +14,8 @@ class AnnonceController extends Controller
      */
     public function index()
     {
-        //
+        $annonces=Annonce::all();
+        return response()->json($annonces);
     }
 
     /**
@@ -34,7 +36,25 @@ class AnnonceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $annonce=new Annonce();
+        if($request->file('urlImage')){
+            $completeFileNmae = $request->file('urlImage')->getClientOriginalName();
+            $fileNmaeOnLy=pathinfo($completeFileNmae,PATHINFO_FILENAME);
+            $extension=$request->file('urlImage')->getClientOriginalExtension();
+            $fileName=str_replace(' ','_',$fileNmaeOnLy).'-'.rand().'_'.time().'.'.$extension;
+            $path = $request->file('urlImage')->storeAs('annonces/', $fileName, 'public');
+            $annonce->urlImage = '/storage/'.$path;
+        }
+        $annonce->titre=$request["titre"];
+        $annonce->description=$request["description"];
+        $annonce->prix=$request["prix"];
+        $annonce->datePublication=$request["datePublication"];
+        $annonce->typeAnnonce_id=$request["typeAnnonce_id"];
+        $annonce->typeAnnonce_id=$request["typeAnnonce_id"];
+        $annonce->utilisateur_id=$request["utilisateur_id"];
+
+        $annonce->save();
+        return response()->json($annonce);
     }
 
     /**

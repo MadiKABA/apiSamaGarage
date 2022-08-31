@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
+use Carbon\Carbon;
+use Carbon\Traits\Date;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -13,7 +17,8 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        $notes=Note::all();
+        return response()->json($notes);
     }
 
     /**
@@ -34,7 +39,16 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $note=new Note();
+        $note->commentaire=$request['commentaire'];
+        $note->email=$request['email'];
+        $note->telephone=$request['telephone'];
+        $note->nomClient=$request['nomClient'];
+        $note->note=$request['note'];
+        $note->dateNote=Carbon::now()->toDateTimeString();
+        $note->garage_id=$request['garage_id'];
+        $note->save();
+        return response()->json($note);
     }
 
     /**

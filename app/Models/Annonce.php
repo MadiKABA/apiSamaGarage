@@ -10,7 +10,7 @@ class Annonce extends Model
     use HasFactory;
 
     protected $fillable=['titre','description','prix','urlImage','datePublication','statut',
-        'cloture','typeAnnonce_id','utilisateur_id'];
+                'cloture','typeAnnonce_id','utilisateur_id'];
     protected $with=["commentaires"];
     use HasFactory;
 

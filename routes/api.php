@@ -26,3 +26,6 @@ Route::apiResource('commentaires',\App\Http\Controllers\CommentaireController::c
 Route::apiResource('utilisateurs',\App\Http\Controllers\UtilisateurController::class);
 Route::apiResource('services',\App\Http\Controllers\ServiceController::class);
 Route::apiResource('servicesGarages',\App\Http\Controllers\ServiceGarageController::class);
+Route::apiResource('typeAnnonces',\App\Http\Controllers\TypeAnnonceController::class);
+Route::apiResource('annonces',\App\Http\Controllers\AnnonceController::class);
+Route::apiResource('notes',\App\Http\Controllers\NoteController::class);

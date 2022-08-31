@@ -49,7 +49,7 @@ class UtilisateurController extends Controller
     public function show(Utilisateur $utilisateur)
     {
         $utilisateur=Utilisateur::find($utilisateur);
-        return $utilisateur;
+        return response()->json($utilisateur);
     }
 
     /**

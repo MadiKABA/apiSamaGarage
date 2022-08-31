@@ -13,4 +13,7 @@ class Service extends Model
     public function serviceGarages(){
         return $this->hasMany(Service_Garage::class);
     }
+    public function garages(){
+        return $this->belongsToMany(Garage::class);
+    }
 }
