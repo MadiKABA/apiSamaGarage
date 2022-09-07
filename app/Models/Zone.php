@@ -16,3 +16,6 @@ class Zone extends Model
         return $this->hasMany(Garage::class);
     }
 }
+
+
+

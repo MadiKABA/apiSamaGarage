@@ -2,25 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
 
-class Utilisateur extends Model
+
+
+class Utilisateur extends Authenticatable
 {
-    use HasFactory;
+
+    use HasApiTokens,HasFactory;
     protected $fillable=['nom','prenom','telephone','email','password','statut','adresse','profil_id'];
-    public function service(){
-        $this->belongsTo(Profile::class);
-    }
+    protected $with=['garages'];
 
-    public function notes(){
-        return $this->hasMany(Note::class);
+    public function garages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Garage::class);
     }
-    public function garageUtilisateurs(){
-        return $this->hasMany(Garage_Utilisateur::class);
-    }
-
-    public function serviceGarges(){
-        return $this->hasMany(Service_Garage::class);
+    public function profile(){
+        return $this->belongsTo(Profile::class);
     }
 }

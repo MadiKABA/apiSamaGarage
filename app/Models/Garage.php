@@ -19,7 +19,7 @@ class Garage extends Model
     public function notes(){
         return $this->hasMany(Note::class);
     }
-    public function utilisateurs(){
+    public function utilisateur(){
         return $this->belongsTo(Utilisateur::class);
     }
     public function services(){

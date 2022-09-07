@@ -29,3 +29,4 @@ Route::apiResource('servicesGarages',\App\Http\Controllers\ServiceGarageControll
 Route::apiResource('typeAnnonces',\App\Http\Controllers\TypeAnnonceController::class);
 Route::apiResource('annonces',\App\Http\Controllers\AnnonceController::class);
 Route::apiResource('notes',\App\Http\Controllers\NoteController::class);
+Route::post('login',[\App\Http\Controllers\AuthController::class,'login']);

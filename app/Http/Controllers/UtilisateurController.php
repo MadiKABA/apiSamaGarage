@@ -43,12 +43,12 @@ class UtilisateurController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Utilisateur  $utilisateur
+     * @param  int $id;
      * @return \Illuminate\Http\Response
      */
-    public function show(Utilisateur $utilisateur)
+    public function show($id)
     {
-        $utilisateur=Utilisateur::find($utilisateur);
+        $utilisateur=Utilisateur::find($id)->garages();
         return response()->json($utilisateur);
     }
 
