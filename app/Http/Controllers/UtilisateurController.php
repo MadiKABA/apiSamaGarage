@@ -48,8 +48,8 @@ class UtilisateurController extends Controller
      */
     public function show($id)
     {
-        $utilisateur=Utilisateur::find($id)->garages();
-        return response()->json($utilisateur);
+        $utilisateurs=Utilisateur::with('annonces','garage')->get()->find($id);
+        return response()->json($utilisateurs);
     }
 
     /**

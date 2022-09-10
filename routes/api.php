@@ -30,3 +30,4 @@ Route::apiResource('typeAnnonces',\App\Http\Controllers\TypeAnnonceController::c
 Route::apiResource('annonces',\App\Http\Controllers\AnnonceController::class);
 Route::apiResource('notes',\App\Http\Controllers\NoteController::class);
 Route::post('login',[\App\Http\Controllers\AuthController::class,'login']);
+Route::get('/annonces/cloture/{id}',[\App\Http\Controllers\AnnonceController::class,'cloturer']);

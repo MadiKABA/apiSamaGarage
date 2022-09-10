@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Annonce;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AnnonceController extends Controller
@@ -48,8 +49,7 @@ class AnnonceController extends Controller
         $annonce->titre=$request["titre"];
         $annonce->description=$request["description"];
         $annonce->prix=$request["prix"];
-        $annonce->datePublication=$request["datePublication"];
-        $annonce->typeAnnonce_id=$request["typeAnnonce_id"];
+        $annonce->datePublication=Carbon::now()->toDateTimeString();
         $annonce->typeAnnonce_id=$request["typeAnnonce_id"];
         $annonce->utilisateur_id=$request["utilisateur_id"];
 
@@ -66,6 +66,12 @@ class AnnonceController extends Controller
     public function show($id)
     {
         //
+    }
+    public function cloturer($id){
+            $annonce=Annonce::find($id);
+            $annonce->cloture=!$annonce->cloture;
+            $annonce->save();
+            return $annonce;
     }
 
     /**
